@@ -11,18 +11,12 @@
             --light: #f1faee;
             --gray: #a8dadc;
             --success: #2a9d8f;
+            --warning: #f4a261;
         }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            background-color: #f4f6f9;
-            display: flex;
-        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: #f4f6f9; display: flex; }
+        
         /* Sidebar */
-        .sidebar {
-            width: 250px; background-color: var(--dark); color: white;
-            height: 100vh; padding: 20px 0; position: fixed;
-        }
+        .sidebar { width: 250px; background-color: var(--dark); color: white; height: 100vh; padding: 20px 0; position: fixed; }
         .sidebar h2 { text-align: center; color: var(--primary); margin-bottom: 30px; font-size: 24px; line-height: 1.2;}
         .sidebar ul { list-style: none; padding: 0; }
         .sidebar ul li { padding: 15px 20px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.1); transition: 0.3s; }
@@ -30,44 +24,60 @@
         
         /* Main Content Area */
         .main-content { margin-left: 250px; padding: 30px; width: calc(100% - 250px); box-sizing: border-box; }
-        
-        /* View Sections (For Navigation) */
-        .view-section { display: none; /* Hidden by default */ }
-        .view-section.active { display: block; /* Shows the active one */ }
+        .view-section { display: none; }
+        .view-section.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .btn-add { background-color: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.2s; }
-        .btn-add:hover { background-color: #c92a37; }
+        .btn-add, .btn-action { background-color: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .btn-add:hover, .btn-action:hover { background-color: #c92a37; }
+        .btn-save { background-color: var(--success); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
         
-        /* Analytics Cards */
-        .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
+        /* Grid Layouts */
+        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
         .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         .card h3 { margin: 0; color: #666; font-size: 14px; }
         .card p { margin: 10px 0 0; font-size: 24px; font-weight: bold; color: var(--dark); }
 
-        /* Leads Table */
-        .table-container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        /* Branch Cards Specific */
+        .branch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .branch-card { background: white; border-top: 5px solid var(--dark); padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .branch-card h2 { margin-top: 0; color: var(--dark); }
+        .stat-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }
+
+        /* Tables */
+        .table-container, .settings-container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
         th { background-color: #f8f9fa; color: #333; }
         .badge { padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+        
+        /* Status Colors */
         .status-new { background: #ffeeba; color: #856404; }
         .status-contacted { background: #b8daff; color: #004085; }
         .status-scheduled { background: #c3e6cb; color: #155724; }
+        .status-vip { background: #ffd700; color: #856404; }
+        .status-regular { background: #e2e3e5; color: #383d41; }
         
-        .ai-assist-btn { background: var(--dark); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; transition: 0.2s; }
-        .ai-assist-btn:hover { background: #2a4d7c; }
+        .ai-assist-btn { background: var(--dark); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+        
+        /* Settings Forms */
+        .form-row { margin-bottom: 20px; }
+        .form-row label { display: block; font-weight: bold; margin-bottom: 8px; color: var(--dark); }
+        .form-row input[type="text"], .form-row select, .form-row textarea { width: 100%; max-width: 600px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-family: inherit; }
+        .toggle-label { display: flex; align-items: center; gap: 10px; font-weight: normal; cursor: pointer;}
+        .toggle-switch { appearance: none; width: 40px; height: 20px; background: #ccc; border-radius: 20px; position: relative; cursor: pointer; outline: none; transition: 0.3s; }
+        .toggle-switch:checked { background: var(--success); }
+        .toggle-switch::before { content: ''; position: absolute; width: 16px; height: 16px; border-radius: 50%; top: 2px; left: 2px; background: white; transition: 0.3s; }
+        .toggle-switch:checked::before { left: 22px; }
 
-        /* Placeholder styles for new tabs */
-        .placeholder-box { background: white; padding: 40px; text-align: center; border-radius: 8px; color: #666; border: 2px dashed #ccc; }
-
-        /* Modals (Popups) */
+        /* Modals */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
         .modal { background: white; padding: 25px; border-radius: 8px; width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .modal h3 { margin-top: 0; color: var(--dark); }
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 5px; font-size: 14px; color: #333;}
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
         .btn-submit { background: var(--success); color: white; border: none; padding: 10px; width: 100%; cursor: pointer; border-radius: 4px; font-weight: bold; }
         .close-btn { float: right; cursor: pointer; font-size: 20px; font-weight: bold; border: none; background: none; color: #666; }
     </style>
@@ -89,18 +99,15 @@
     <div class="main-content">
 
         <div id="view-dashboard" class="view-section active">
-            <div class="header">
-                <h1>Overview Dashboard</h1>
-            </div>
+            <div class="header"><h1>Overview Dashboard</h1></div>
             <div class="cards">
-                <div class="card"><h3>Total Active Leads</h3><p id="total-leads-count">42</p></div>
+                <div class="card"><h3>Total Active Leads</h3><p id="dash-leads">42</p></div>
                 <div class="card"><h3>Conversion Rate</h3><p>68%</p></div>
                 <div class="card"><h3>Revenue (This Month)</h3><p>₱ 124,500</p></div>
                 <div class="card"><h3>Most Popular Service</h3><p>Ceramic Coating</p></div>
             </div>
-            <div class="placeholder-box">
-                <h3>Visual Charts will go here</h3>
-                <p>Module 6: Bar, pie, and line charts showing peak inquiry times and revenue per branch.</p>
+            <div class="table-container" style="height: 200px; display: flex; justify-content: center; align-items: center; color: #999;">
+                [ Analytics Charts Module (Chart.js) will render here ]
             </div>
         </div>
 
@@ -110,53 +117,110 @@
                 <button class="btn-add" onclick="openModal('leadModal')">+ New Manual Lead</button>
             </div>
             <div class="table-container">
-                <h2>All Inquiries</h2>
+                <h2>Active Inquiries</h2>
                 <table>
                     <thead>
-                        <tr>
-                            <th>Customer</th>
-                            <th>Service</th>
-                            <th>Source</th>
-                            <th>Branch</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
+                        <tr><th>Customer</th><th>Service</th><th>Source</th><th>Branch</th><th>Status</th><th>Action</th></tr>
                     </thead>
-                    <tbody id="lead-table-body">
-                        </tbody>
+                    <tbody id="lead-table-body"></tbody>
                 </table>
             </div>
         </div>
 
         <div id="view-sales" class="view-section">
-            <div class="header"><h1>Sales Tracking</h1></div>
-            <div class="placeholder-box">
-                <h3>Module 3: Sales Records</h3>
-                <p>This is where staff will mark leads as "Completed" and enter the final amount paid to update the revenue dashboard.</p>
+            <div class="header">
+                <h1>Sales Tracking</h1>
+                <button class="btn-add">+ Log Completed Job</button>
+            </div>
+            <div class="cards">
+                <div class="card"><h3>Sales Today</h3><p>₱ 18,000</p></div>
+                <div class="card"><h3>Completed Jobs (Week)</h3><p>24</p></div>
+            </div>
+            <div class="table-container">
+                <h2>Recent Transactions</h2>
+                <table>
+                    <thead>
+                        <tr><th>Date</th><th>Customer</th><th>Service</th><th>Branch</th><th>Amount Paid</th></tr>
+                    </thead>
+                    <tbody id="sales-table-body"></tbody>
+                </table>
             </div>
         </div>
 
         <div id="view-customers" class="view-section">
-            <div class="header"><h1>Customer Database</h1></div>
-            <div class="placeholder-box">
-                <h3>Module 4: Customer Profiles</h3>
-                <p>A list of repeat customers, visit frequency, VIP status, and automated follow-up reminders.</p>
+            <div class="header">
+                <h1>Customer Directory</h1>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search customers..." style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 250px;">
+                </div>
+            </div>
+            <div class="table-container">
+                <h2>All Profiles</h2>
+                <table>
+                    <thead>
+                        <tr><th>Name</th><th>Contact Info</th><th>Total Visits</th><th>Total Spent</th><th>Loyalty Status</th></tr>
+                    </thead>
+                    <tbody id="customer-table-body"></tbody>
+                </table>
             </div>
         </div>
 
         <div id="view-branches" class="view-section">
-            <div class="header"><h1>Branch Operations</h1></div>
-            <div class="placeholder-box">
-                <h3>Module 5: Branch Workload</h3>
-                <p>Compare branch performance, see which branch is overloaded, and manually route leads.</p>
+            <div class="header"><h1>Branch Operations Overview</h1></div>
+            <div class="branch-grid">
+                <div class="branch-card">
+                    <h2>Branch A (Main)</h2>
+                    <div class="stat-row"><span>Active Leads:</span> <strong>18</strong></div>
+                    <div class="stat-row"><span>Staff On Duty:</span> <strong>5</strong></div>
+                    <div class="stat-row"><span>Jobs Today:</span> <strong>4</strong></div>
+                    <div class="stat-row"><span>Revenue Today:</span> <strong style="color:var(--success);">₱ 12,000</strong></div>
+                    <button class="btn-action" style="width: 100%; margin-top: 15px;">Manage Schedule</button>
+                </div>
+                <div class="branch-card">
+                    <h2>Branch B (North)</h2>
+                    <div class="stat-row"><span>Active Leads:</span> <strong>12</strong></div>
+                    <div class="stat-row"><span>Staff On Duty:</span> <strong>3</strong></div>
+                    <div class="stat-row"><span>Jobs Today:</span> <strong>2</strong></div>
+                    <div class="stat-row"><span>Revenue Today:</span> <strong style="color:var(--success);">₱ 6,000</strong></div>
+                    <button class="btn-action" style="width: 100%; margin-top: 15px;">Manage Schedule</button>
+                </div>
+                <div class="branch-card">
+                    <h2>Branch C (South)</h2>
+                    <div class="stat-row"><span>Active Leads:</span> <strong>12</strong></div>
+                    <div class="stat-row"><span>Staff On Duty:</span> <strong>4</strong></div>
+                    <div class="stat-row"><span>Jobs Today:</span> <strong>0</strong></div>
+                    <div class="stat-row"><span>Revenue Today:</span> <strong style="color:var(--success);">₱ 0</strong></div>
+                    <button class="btn-action" style="width: 100%; margin-top: 15px;">Manage Schedule</button>
+                </div>
             </div>
         </div>
 
         <div id="view-ai" class="view-section">
-            <div class="header"><h1>AI Configuration</h1></div>
-            <div class="placeholder-box">
-                <h3>Module 2: AI Rules Engine</h3>
-                <p>Update pricing, service descriptions, and tone of voice so the AI suggests accurate replies to customers.</p>
+            <div class="header">
+                <h1>AI Configuration Rules</h1>
+                <button class="btn-save" onclick="alert('AI Rules Saved Successfully!')">Save Settings</button>
+            </div>
+            <div class="settings-container">
+                <div class="form-row">
+                    <label>Auto-Tag New Inquiries</label>
+                    <label class="toggle-label"><input type="checkbox" class="toggle-switch" checked> Enable AI to automatically categorize leads by service</label>
+                </div>
+                <div class="form-row">
+                    <label>AI Reply Tone</label>
+                    <select>
+                        <option>Friendly & Approachable</option>
+                        <option>Highly Professional / Luxury</option>
+                        <option>Direct & Sales-Focused</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label>Pre-defined Service Pricing Rules (For AI Context)</label>
+                    <textarea rows="6" placeholder="Example: Ceramic Coating starts at P15,000 and takes 2 days. Carwash is P250.">Ceramic Coating: Starts at ₱15,000. Takes 2-3 days. Requires booking.
+Full Detailing: Starts at ₱4,500. Takes 1 day.
+PPF: Starts at ₱45,000 depending on panels.
+Carwash: ₱250 for sedans, ₱350 for SUVs.</textarea>
+                    <p style="font-size: 12px; color: #666;">The AI will use these rules to answer customer inquiries accurately.</p>
+                </div>
             </div>
         </div>
 
@@ -166,137 +230,104 @@
         <div class="modal">
             <button class="close-btn" onclick="closeModal('leadModal')">&times;</button>
             <h3>Add New Lead</h3>
-            <div class="form-group">
-                <label>Customer Name</label>
-                <input type="text" id="newName" placeholder="e.g. John Doe">
-            </div>
+            <div class="form-group"><label>Customer Name</label><input type="text" id="newName"></div>
             <div class="form-group">
                 <label>Interested Service</label>
-                <select id="newService">
-                    <option>Ceramic Coating</option>
-                    <option>Full Detailing</option>
-                    <option>PPF</option>
-                    <option>Carwash</option>
-                </select>
+                <select id="newService"><option>Ceramic Coating</option><option>Full Detailing</option><option>PPF</option><option>Carwash</option></select>
             </div>
             <div class="form-group">
                 <label>Lead Source</label>
-                <select id="newSource">
-                    <option>Walk-in</option>
-                    <option>Phone</option>
-                    <option>Facebook</option>
-                    <option>Instagram</option>
-                </select>
+                <select id="newSource"><option>Walk-in</option><option>Phone</option><option>Facebook</option><option>Website</option></select>
             </div>
             <div class="form-group">
                 <label>Branch</label>
-                <select id="newBranch">
-                    <option>Branch A</option>
-                    <option>Branch B</option>
-                    <option>Branch C</option>
-                </select>
+                <select id="newBranch"><option>Branch A</option><option>Branch B</option><option>Branch C</option></select>
             </div>
             <button class="btn-submit" onclick="saveLead()">Save Lead</button>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="aiModal">
-        <div class="modal">
-            <button class="close-btn" onclick="closeModal('aiModal')">&times;</button>
-            <h3>✨ AI Suggested Reply</h3>
-            <p style="font-size: 13px; color: #666; margin-top: 0;">Drafting response for <strong id="aiCustomerName" style="color:var(--dark);"></strong> regarding <strong id="aiService" style="color:var(--primary);"></strong>...</p>
-            <textarea id="aiMessage" rows="8"></textarea>
-            <button class="btn-submit" style="margin-top: 15px;" onclick="sendAiMessage()">Send Message</button>
         </div>
     </div>
 
     <script>
         // --- NAVIGATION LOGIC ---
         function switchTab(clickedElement, viewIdToDisplay) {
-            // 1. Remove active class from all menu items
-            const menuItems = document.querySelectorAll('#menu li');
-            menuItems.forEach(item => item.classList.remove('active'));
-            
-            // 2. Add active class to the clicked menu item
+            document.querySelectorAll('#menu li').forEach(item => item.classList.remove('active'));
             clickedElement.classList.add('active');
-
-            // 3. Hide all view sections
-            const allViews = document.querySelectorAll('.view-section');
-            allViews.forEach(view => view.classList.remove('active'));
-
-            // 4. Show the specific view requested
+            document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active'));
             document.getElementById(viewIdToDisplay).classList.add('active');
         }
 
-        // --- DATABASE & TABLE LOGIC ---
+        // --- MOCK DATABASES ---
         let leads = [
             { name: "Juan Dela Cruz", service: "Ceramic Coating", source: "Facebook", branch: "Branch A", status: "New", statusClass: "status-new" },
             { name: "Maria Santos", service: "Full Detailing", source: "Website", branch: "Branch B", status: "Contacted", statusClass: "status-contacted" },
-            { name: "Carlos Reyes", service: "PPF", source: "Instagram", branch: "Branch A", status: "Scheduled", statusClass: "status-scheduled" },
-            { name: "Ana Lim", service: "Carwash", source: "Walk-in", branch: "Branch C", status: "New", statusClass: "status-new" }
+            { name: "Carlos Reyes", service: "PPF", source: "Instagram", branch: "Branch A", status: "Scheduled", statusClass: "status-scheduled" }
         ];
 
-        let totalLeadsCounter = 42;
+        let sales = [
+            { date: "Mar 20, 2026", customer: "Miguel Torres", service: "Ceramic Coating", branch: "Branch A", amount: "₱ 15,000" },
+            { date: "Mar 20, 2026", customer: "Andrea Gomez", service: "Full Detailing", branch: "Branch B", amount: "₱ 4,500" },
+            { date: "Mar 19, 2026", customer: "Jose Rizal", service: "Carwash", branch: "Branch A", amount: "₱ 250" }
+        ];
 
-        function renderTable() {
+        let customers = [
+            { name: "Miguel Torres", phone: "0917-123-4567", visits: 4, spent: "₱ 32,500", status: "VIP", sClass: "status-vip" },
+            { name: "Andrea Gomez", phone: "0918-987-6543", visits: 1, spent: "₱ 4,500", status: "Regular", sClass: "status-regular" },
+            { name: "Jose Rizal", phone: "0999-111-2222", visits: 12, spent: "₱ 18,000", status: "VIP", sClass: "status-vip" }
+        ];
+
+        // --- RENDER FUNCTIONS ---
+        function renderLeads() {
             const tbody = document.getElementById('lead-table-body');
             tbody.innerHTML = ''; 
-            
-            leads.forEach((lead) => {
-                let row = `<tr>
-                    <td><strong>${lead.name}</strong></td>
-                    <td>${lead.service}</td>
-                    <td>${lead.source}</td>
-                    <td>${lead.branch}</td>
-                    <td><span class="badge ${lead.statusClass}">${lead.status}</span></td>
-                    <td><button class="ai-assist-btn" onclick="openAiModal('${lead.name}', '${lead.service}')">✨ AI Reply</button></td>
+            leads.forEach(lead => {
+                tbody.innerHTML += `<tr>
+                    <td><strong>${lead.name}</strong></td><td>${lead.service}</td><td>${lead.source}</td>
+                    <td>${lead.branch}</td><td><span class="badge ${lead.statusClass}">${lead.status}</span></td>
+                    <td><button class="ai-assist-btn">✨ AI Reply</button></td>
                 </tr>`;
-                tbody.innerHTML += row;
             });
-            document.getElementById('total-leads-count').innerText = totalLeadsCounter;
+            document.getElementById('dash-leads').innerText = leads.length + 39; // Fake dashboard math
+        }
+
+        function renderSales() {
+            const tbody = document.getElementById('sales-table-body');
+            tbody.innerHTML = '';
+            sales.forEach(sale => {
+                tbody.innerHTML += `<tr>
+                    <td>${sale.date}</td><td><strong>${sale.customer}</strong></td>
+                    <td>${sale.service}</td><td>${sale.branch}</td>
+                    <td><strong style="color:var(--success);">${sale.amount}</strong></td>
+                </tr>`;
+            });
+        }
+
+        function renderCustomers() {
+            const tbody = document.getElementById('customer-table-body');
+            tbody.innerHTML = '';
+            customers.forEach(cust => {
+                tbody.innerHTML += `<tr>
+                    <td><strong>${cust.name}</strong></td><td>${cust.phone}</td>
+                    <td>${cust.visits}</td><td>${cust.spent}</td>
+                    <td><span class="badge ${cust.sClass}">${cust.status}</span></td>
+                </tr>`;
+            });
         }
 
         // --- MODAL CONTROLS ---
-        function openModal(modalId) { document.getElementById(modalId).style.display = 'flex'; }
-        function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
-
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        
         function saveLead() {
             const name = document.getElementById('newName').value;
-            if(!name) { alert("Please enter a customer name!"); return; }
-
-            leads.unshift({ 
-                name: name, 
-                service: document.getElementById('newService').value, 
-                source: document.getElementById('newSource').value, 
-                branch: document.getElementById('newBranch').value, 
-                status: "New", 
-                statusClass: "status-new" 
-            });
-
-            totalLeadsCounter++;
-            renderTable();
-            document.getElementById('newName').value = '';
-            closeModal('leadModal');
-            alert("Lead added successfully! You can see them in the table.");
+            if(!name) return alert("Please enter a name");
+            leads.unshift({ name: name, service: document.getElementById('newService').value, source: document.getElementById('newSource').value, branch: document.getElementById('newBranch').value, status: "New", statusClass: "status-new" });
+            renderLeads(); closeModal('leadModal'); document.getElementById('newName').value = '';
         }
 
-        function openAiModal(customerName, serviceType) {
-            document.getElementById('aiCustomerName').innerText = customerName;
-            document.getElementById('aiService').innerText = serviceType;
-            let draftText = serviceType === "Ceramic Coating" || serviceType === "PPF" 
-                ? `Hi ${customerName},\n\nThank you for reaching out to Garage 89 Auto Spa! It's great to see you're interested in protecting your vehicle with our ${serviceType}.\n\nThis service is one of our specialties and offers incredible long-term protection. Would you like me to send over our pricing packages, or would you prefer to bring the car by the shop so we can take a look at the paint condition first?\n\nBest,\nGarage 89 Team`
-                : `Hi ${customerName},\n\nThanks for messaging Garage 89 Auto Spa! We'd love to get you scheduled for a ${serviceType}.\n\nWhen were you looking to bring the car in? We currently have some availability this coming week.\n\nBest,\nGarage 89 Team`;
-            document.getElementById('aiMessage').value = draftText;
-            openModal('aiModal');
-        }
-
-        function sendAiMessage() {
-            alert("Message simulated as sent! In the real app, this would connect to your messaging channels.");
-            closeModal('aiModal');
-        }
-
-        // Initialize table on load
-        renderTable();
+        // Init
+        renderLeads();
+        renderSales();
+        renderCustomers();
     </script>
 </body>
 </html>
